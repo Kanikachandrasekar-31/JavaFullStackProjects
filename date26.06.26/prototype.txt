@@ -1,0 +1,62 @@
+class Document {
+    String content;
+    String author;
+
+    public Document(String content, String author) {
+        this.content = content;
+        this.author = author;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Document doc1 = new Document("Design Patterns", "Sylvia");
+
+        // Manual copy → repetitive
+        Document doc2 = new Document(doc1.content, doc1.author);
+
+        System.out.println(doc2.content); // Design Patterns
+    }
+}
+
+Problem: Copying requires manually re‑passing all fields.
+Error‑prone if object has many attributes
+==================================================================================================================
+
+
+correct:
+// Prototype interface
+interface Prototype {
+    Prototype clone();
+}
+
+// Document class implementing Prototype
+class Document implements Prototype {
+    String content;
+    String author;
+
+    public Document(String content, String author) {
+        this.content = content;
+        this.author = author;
+    }
+
+    @Override
+    public Prototype clone() {
+        return new Document(content, author);
+    }
+
+    public void show() {
+        System.out.println("Document: " + content + " by " + author);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Document doc1 = new Document("Design Patterns", "Sylvia");
+        Document doc2 = (Document) doc1.clone();
+
+        doc1.show(); // Document: Design Patterns by Sylvia
+        doc2.show(); // Document: Design Patterns by Sylvia
+    }
+}
+

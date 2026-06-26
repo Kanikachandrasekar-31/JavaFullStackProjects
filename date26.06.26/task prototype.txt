@@ -1,0 +1,68 @@
+TASK:
+// Task: Create a Shape class hierarchy using Prototype Pattern
+// Requirements:
+// 1. Define a Prototype interface with clone().
+// 2. Implement Circle and Rectangle classes that can be cloned.
+// 3. Demonstrate in Main how to copy shapes without re‑creating them manually.
+==============================================================================
+
+
+// Prototype interface
+interface Prototype {
+    Prototype clone();
+}
+
+// Circle class implementing Prototype
+class Circle implements Prototype {
+    int radius;
+
+    public Circle(int radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public Prototype clone() {
+        return new Circle(radius);
+    }
+
+    public void show() {
+        System.out.println("Circle with radius: " + radius);
+    }
+}
+
+// Rectangle class implementing Prototype
+class Rectangle implements Prototype {
+    int width;
+    int height;
+
+    public Rectangle(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public Prototype clone() {
+        return new Rectangle(width, height);
+    }
+
+    public void show() {
+        System.out.println("Rectangle with width: " + width + " and height: " + height);
+    }
+}
+
+// Main class to demonstrate cloning
+public class Main {
+    public static void main(String[] args) {
+        Circle circle1 = new Circle(10);
+        Circle circle2 = (Circle) circle1.clone();
+
+        Rectangle rect1 = new Rectangle(20, 30);
+        Rectangle rect2 = (Rectangle) rect1.clone();
+
+        circle1.show(); // Circle with radius: 10
+        circle2.show(); // Circle with radius: 10
+
+        rect1.show();   // Rectangle with width: 20 and height: 30
+        rect2.show();   // Rectangle with width: 20 and height: 30
+    }
+}

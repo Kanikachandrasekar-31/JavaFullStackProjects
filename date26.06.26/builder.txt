@@ -1,0 +1,76 @@
+// builder
+
+BAD:
+// Pizza with too many constructor parameters
+class Pizza {
+    private String dough;
+    private String sauce;
+    private String topping;
+
+    public Pizza(String dough, String sauce, String topping) {
+        this.dough = dough;
+        this.sauce = sauce;
+        this.topping = topping;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Hard to read, error‑prone
+        Pizza pizza = new Pizza("Thin Crust", "Tomato", "Cheese");
+    }
+===========================================================================================
+
+// Pizza class with Builder
+class Pizza {
+    private String dough;
+    private String sauce;
+    private String topping;
+
+    private Pizza(PizzaBuilder builder) {
+        this.dough = builder.dough;
+        this.sauce = builder.sauce;
+        this.topping = builder.topping;
+    }
+
+    public static class PizzaBuilder {
+        private String dough;
+        private String sauce;
+        private String topping;
+
+        public PizzaBuilder setDough(String dough) {
+            this.dough = dough;
+            return this;
+        }
+
+        public PizzaBuilder setSauce(String sauce) {
+            this.sauce = sauce;
+            return this;
+        }
+
+        public PizzaBuilder setTopping(String topping) {
+            this.topping = topping;
+            return this;
+        }
+
+        public Pizza build() {
+            return new Pizza(this);
+        }
+    }
+
+    public void showPizza() {
+        System.out.println("Pizza with " + dough + ", " + sauce + ", " + topping);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Pizza pizza = new Pizza.PizzaBuilder()
+                            .setDough("Thin Crust")
+                            .setSauce("Tomato")
+                            .setTopping("Cheese")
+                            .build();
+
+        pizza.showPizza(); // Output: Pizza with Thin Crust, Tomato, Cheese
+    }
+}
