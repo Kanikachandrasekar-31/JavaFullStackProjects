@@ -1,0 +1,66 @@
+// BAD: Each player creates their own scoreboard
+class Scoreboard {
+    private int score;
+
+    public void addPoints(int points) {
+        score += points;
+        System.out.println("Score updated: " + score);
+    }
+
+    public int getScore() {
+        return score;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Two players, two different scoreboards
+        Scoreboard player1Board = new Scoreboard();
+        Scoreboard player2Board = new Scoreboard();
+
+        player1Board.addPoints(10); // Score updated: 10
+        player2Board.addPoints(20); // Score updated: 20
+
+        // Confusing: two separate scores!
+        System.out.println("Player1 Scoreboard: " + player1Board.getScore()); // 10
+        System.out.println("Player2 Scoreboard: " + player2Board.getScore()); // 20
+    }
+}
+==============================================================================================================================================
+
+class Scoreboard {
+private int score;
+private static Scoreboard instance;
+
+public static Scoreboard getInstance(){
+if(instance == null){
+return new Scoreboard();
+}
+return instance;
+}
+
+public void addPoints(int points) {
+score += points;
+System.out.println("Score updated: " + score);
+}
+
+public int getScore() {
+return score;
+}
+}
+
+public class Main {
+public static void main(String[] args) {
+Scoreboard player1Board = Scoreboard.getInstance();
+Scoreboard player2Board = Scoreboard.getInstance();
+
+player1Board.addPoints(10);
+player2Board.addPoints(20);
+
+// Confusing: two separate scores!
+System.out.println("Player1 Scoreboard: " + player1Board.getScore()); // 10
+System.out.println("Player2 Scoreboard: " + player2Board.getScore()); // 20
+}
+}
+===========================================================================================================================================================================
+

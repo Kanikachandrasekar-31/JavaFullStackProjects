@@ -1,0 +1,46 @@
+without factory method:
+if(type.equals("SUV")) {
+    car = new SUV();
+} else if(type.equals("Sedan")) {
+    car = new Sedan();
+}
+==============================================================================================================================================
+Car car = CarFactory.createCar("SUV");
+=================================================================================================================================================
+Example: CarFactory Class
+// Car interface
+interface Car {
+    void drive();
+}
+
+// Concrete classes
+class SUV implements Car {
+    public void drive() { System.out.println("Driving an SUV"); }
+}
+
+class Sedan implements Car {
+    public void drive() { System.out.println("Driving a Sedan"); }
+}
+
+// Factory class
+class CarFactory {
+    public static Car createCar(String type) {
+        if(type.equalsIgnoreCase("SUV")) {
+            return new SUV();
+        } else if(type.equalsIgnoreCase("Sedan")) {
+            return new Sedan();
+        }
+        return null; // or throw exception
+    }
+}
+
+Using the Factory
+public class Showroom {
+    public static void main(String[] args) {
+        Car car1 = CarFactory.createCar("SUV");
+        car1.drive();   // Output: Driving an SUV
+
+        Car car2 = CarFactory.createCar("Sedan");
+        car2.drive();   // Output: Driving a Sedan
+    }
+}

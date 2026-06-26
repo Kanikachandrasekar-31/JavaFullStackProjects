@@ -1,0 +1,63 @@
+// Problem Statement:
+// You are building a Payment System.
+// Right now, the code directly creates objects like
+// new CreditCardPayment() or new PayPalPayment() using if/else.
+// This makes the code messy and hard to extend when new payment methods are added.
+
+// Your Task:
+// 1. Write the bad code where payments are created using if/else.
+// 2. Refactor it using a PaymentFactory class that decides which payment object to create.
+// 3. Add a new payment type (e.g., UPIPayment) and show how easy it is to extend with the factory.
+
+// Deliverables:
+// - Create a Payment interface.
+// - Implement CreditCardPayment, PayPalPayment, and UPIPayment classes.
+// - Implement a PaymentFactory class that returns the correct object.
+// - Show usage in a Main class.
+========================================================================================================================================
+
+interface Payment{
+ void pay();
+}
+class CreditCardPayment implements Payment{
+public void pay(){
+System.out.println("Creditcard payment done");
+}
+}
+class PayPalPayment implements Payment{
+public void pay(){
+System.out.println("PayPalPayment payment done");
+}
+}
+class UPIPayment implements Payment{
+public void pay(){
+System.out.println("UPIPayment  payment done");
+}
+}
+class PaymentFactory{
+public static Payment pays(String type){
+if(type.equals("Creditcard)){
+return new CreditCardPayment();
+}
+elseif(type.equals("paypal)){
+return new PayPalPayment();
+}
+elseif(type.equals("UPI")){
+return new UPIPayment();
+}
+return null;
+
+}
+}
+public class Main {
+public static void main(String[] args){
+
+Payment p1 = PaymentFactory.pays(Creditcard);
+p1.pay();
+Payment p2 = PaymentFactory.pays(paypal);
+p1.pay();
+Payment p3 = PaymentFactory.pays(UPI);
+p1.pay();
+
+}
+}

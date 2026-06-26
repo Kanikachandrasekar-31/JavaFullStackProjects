@@ -1,0 +1,102 @@
+Bad code:
+// Directly creating objects → tightly coupled
+class VictorianChair {}
+class VictorianTable {}
+class ModernChair {}
+class ModernTable {}
+
+public class Main {
+    public static void main(String[] args) {
+        VictorianChair chair = new VictorianChair();
+        VictorianTable table = new VictorianTable();
+
+        // If we switch to Modern, we must change everywhere
+        ModernChair chair2 = new ModernChair();
+        ModernTable table2 = new ModernTable();
+    }
+}
+Problem: Code is tightly coupled to specific classes.
+Hard to switch product families
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CORRECT CODE
+// Abstract product interfaces
+interface Chair { void sit(); }
+interface Table { void use(); }
+
+// Concrete products
+class VictorianChair implements Chair {
+    public void sit() { System.out.println("Sitting on Victorian Chair"); }
+}
+class VictorianTable implements Table {
+    public void use() { System.out.println("Using Victorian Table"); }
+}
+
+class ModernChair implements Chair {
+    public void sit() { System.out.println("Sitting on Modern Chair"); }
+}
+class ModernTable implements Table {
+    public void use() { System.out.println("Using Modern Table"); }
+}
+
+// Abstract Factory
+interface FurnitureFactory {
+    Chair createChair();
+    Table createTable();
+}
+
+// Concrete Factories
+class VictorianFactory implements FurnitureFactory {
+    public Chair createChair() { return new VictorianChair(); }
+    public Table createTable() { return new VictorianTable(); }
+}
+
+class ModernFactory implements FurnitureFactory {
+    public Chair createChair() { return new ModernChair(); }
+    public Table createTable() { return new ModernTable(); }
+}
+
+// Client
+public class Main {
+    public static void main(String[] args) {
+        FurnitureFactory factory = new VictorianFactory();
+        Chair chair = factory.createChair();
+        Table table = factory.createTable();
+
+        chair.sit();   // Sitting on Victorian Chair
+        table.use();   // Using Victorian Table
+
+        factory = new ModernFactory();
+        Chair chair2 = factory.createChair();
+        Table table2 = factory.createTable();
+
+        chair2.sit();  // Sitting on Modern Chair
+        table2.use();  // Using Modern Table
+    }
+}
+
+Benefit: Easily switch between product families (Victorian ↔ Modern).
+Client code stays clean and flexible.
+
+Post by sylvia Benjamin
+sylvia Benjamin
+Created 11:50 AM11:50 AM
+Bad code:
+// Directly creating objects → tightly coupled
+class VictorianChair {}
+class VictorianTable {}
+class ModernChair {}
+class ModernTable {}
+
+public class Main {
+    public static void main(String[] args) {
+        VictorianChair chair = new VictorianChair();
+        VictorianTable table = new VictorianTable();
+
+        // If we switch to Modern, we must change everywhere
+        ModernChair chair2 = new ModernChair();
+        ModernTable table2 = new ModernTable();
+    }
+}
+Problem: Code is tightly coupled to specific classes.
+Hard to switch product families
+

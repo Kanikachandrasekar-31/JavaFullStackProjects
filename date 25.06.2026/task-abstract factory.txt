@@ -1,0 +1,69 @@
+Create a GUI Toolkit using Abstract Factory
+// Requirements:
+// 1. Define Button and Checkbox interfaces.
+// 2. Implement WindowsButton + WindowsCheckbox, MacButton + MacCheckbox.
+// 3. Create WindowsFactory and MacFactory to produce families of GUI components.
+// 4. Demonstrate in Main how switching factories changes the entire UI style
+==========================================================================================================================================================
+interface bButton{
+void Button();
+
+}
+interface CCheckbox{
+void Checkbox();
+}
+class WindowsButton implements bButton{
+public void Button(){
+System.out.println("hey i am window button here");
+}
+}
+class MacButton implements bButton{
+public void Button(){
+System.out.println("hey i am Mac button here");
+}
+}
+class WindowsCheckbox implements  CCheckbox{
+public void  Checkbox(){
+System.out.println("hey i am Checkbox here");
+}
+}
+class MacCheckbox implements  CCheckbox{
+public void Checkbox(){
+System.out.println("hey i am MacCheckbox here");
+}
+}
+ interface Factory{
+bButton createButton();
+CCheckbox CreateCheckbox();
+}
+class WindowsFactory implements Factory{
+public bButton createButton (){
+return new WindowsButton();
+}
+public CCheckbox CreateCheckbox(){
+return new  WindowsCheckbox();
+} 
+
+}
+class MacFactory implements Factory{
+public bButton createButton (){
+return new MacButton();
+}
+public CCheckbox CreateCheckbox(){
+return new  MacCheckbox();
+} 
+}
+public class Main{
+public static void main(String[] args){
+Factory fac = new WindowsFactory();
+bButton but1 = fac.createButton();
+CCheckbox ch1 = fac.CreateCheckbox();
+but1.Button();
+ch1.Checkbox();
+ Factory f2 = new MacFactory();
+bButton but = f2.createButton();
+CCheckbox ch = f2.CreateCheckbox();
+but.Button();
+ch.Checkbox();
+}
+}
