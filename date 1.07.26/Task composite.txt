@@ -1,0 +1,105 @@
+Task:
+:
+You are building a simple GUI framework. A screen can contain individual components (like buttons, text boxes) and composite components (like panels that group multiple components).
+:
+A UIComponent interface with a render() method.
+: Button, TextBox, Label (each renders itself).
+: Panel (can contain multiple components, including other panels).
+Client code should be able to call render() on any component without worrying if it’s a single element or a container.
+--------------------------------------------------------------------------------------------------------------------------
+
+//without composite
+class Button {
+    private String label;
+    public Button(String label) { this.label = label; }
+    public void renderButton() {
+        System.out.println("Rendering Button: " + label);
+    }
+}
+
+class TextBox {
+    private String text;
+    public TextBox(String text) { this.text = text; }
+    public void renderTextBox() {
+        System.out.println("Rendering TextBox: " + text);
+    }
+}
+
+class Label {
+    private String caption;
+    public Label(String caption) { this.caption = caption; }
+    public void renderLabel() {
+        System.out.println("Rendering Label: " + caption);
+    }
+}
+
+// Composite-like class but without a common interface
+class Panel {
+    private List<Object> children = new ArrayList<>();
+
+    public void add(Object component) {
+        children.add(component);
+    }
+
+    public void renderPanel() {
+        System.out.println("Rendering Panel...");
+        for (Object c : children) {
+            if (c instanceof Button) {
+                ((Button)c).renderButton();
+            } else if (c instanceof TextBox) {
+                ((TextBox)c).renderTextBox();
+            } else if (c instanceof Label) {
+                ((Label)c).renderLabel();
+            } else if (c instanceof Panel) {
+                ((Panel)c).renderPanel();
+            }
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Button btn = new Button("Submit");
+        TextBox txt = new TextBox("Enter Name");
+        Label lbl = new Label("User Form");
+
+        Panel innerPanel = new Panel();
+        innerPanel.add(lbl);
+
+        Panel mainPanel = new Panel();
+        mainPanel.add(btn);
+        mainPanel.add(txt);
+        mainPanel.add(innerPanel);
+
+        mainPanel.renderPanel();
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------
+
+interface UIComponent{
+ void render();
+}
+class Button implements UIComponent{
+Button(String name){ this.name=name}
+public void render(String name){
+ System.out.println(name);
+}
+}
+
+class TextBox implements UIComponent{
+TextBox(String name){
+public void render(String name){
+System.out.println(name);
+}
+
+}
+
+class Label implements UIComponent{
+Label(String name){
+
+}
+class TextBox implements UIComponent{
+}
+class Label implements UIComponent{
+}
